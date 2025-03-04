@@ -15,16 +15,15 @@
 
 // ---------------------------------------------------------------------------------------
 
-
 fn find_max(numbers: &[i32]) -> Option<i32> {
-    if numbers.len() == 0 {
+    if numbers.is_empty() { // si la longueur = 0
         return None;
     }
     let mut current_max_value = numbers[0];
 
-    for num in numbers.iter() {
-        if *num > current_max_value {
-            current_max_value = *num;
+    for &num in numbers.iter() {
+        if num > current_max_value {
+            current_max_value = num;
         }
     }
     println!("le plus élevé est : {}", current_max_value);
@@ -39,3 +38,12 @@ assert_eq!(find_max(&[10]).unwrap(), 10);
 
 // ------------------------------------------------------------------
 
+fn find_max(numbers: &[i32]) -> Option<i32> {
+    numbers.iter().max().copied()
+}
+
+fn main() {
+    assert_eq!(find_max(&[3, 7, 2, 9, 5]).unwrap(), 9);
+    assert_eq!(find_max(&[42, 1, 99, 23]).unwrap(), 99);
+    assert_eq!(find_max(&[10]).unwrap(), 10);
+    }
