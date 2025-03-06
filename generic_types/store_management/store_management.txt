@@ -1,0 +1,63 @@
+🚀 Exercice : Gestion d'un magasin avec erreurs et types génériques
+Tu vas créer un programme qui gère un stock d’articles pour un magasin en utilisant :
+✔ Génériques (T) pour permettre plusieurs types de produits
+✔ Option<T> pour rechercher un produit (présent ou non)
+✔ Result<T, E> pour gérer les erreurs d'achat
+✔ ? pour simplifier le code
+✔ unwrap() pour tester rapidement
+✔ vec![] pour stocker les produits
+
+📌 Consignes :
+Créer une structure Product<T> avec :
+
+name (nom du produit, String)
+price (prix du produit, f64)
+stock (quantité en stock, u32)
+category (type générique T, exemple : "Alimentaire", "Électronique")
+Créer une structure Store qui contient un Vec<Product<T>> pour stocker les articles.
+
+Implémenter ces méthodes dans Store :
+
+find_product(&self, name: &str) -> Option<&Product<T>>
+🔹 Recherche un produit par son nom (retourne Some(&Product<T>) ou None).
+
+buy_product(&mut self, name: &str, quantity: u32) -> Result<f64, String>
+🔹 Achète un produit :
+
+Si le produit existe et qu’il y a assez de stock, diminue la quantité et retourne le prix total.
+Sinon, retourne une erreur (Err("Stock insuffisant")).
+
+
+✨ Exemple attendu :
+
+fn main() {
+    let mut store = Store {
+        products: vec![
+            Product { name: String::from("Pomme"), price: 0.5, stock: 10, category: "Alimentaire" },
+            Product { name: String::from("Ordinateur"), price: 999.99, stock: 3, category: "Électronique" },
+        ],
+    };
+
+    // Recherche un produit existant
+    let found = store.find_product("Pomme");
+    println!("{:?}", found.unwrap());
+
+    // Achat réussi
+    match store.buy_product("Pomme", 5) {
+        Ok(total) => println!("Achat réussi ! Total: {}€", total),
+        Err(e) => println!("Erreur: {}", e),
+    }
+
+    // Achat échoué (stock insuffisant)
+    match store.buy_product("Ordinateur", 10) {
+        Ok(total) => println!("Achat réussi ! Total: {}€", total),
+        Err(e) => println!("Erreur: {}", e),
+    }
+}
+
+
+💡 Indice pour t’aider :
+
+Pour find_product(), utilise .iter().find()
+Pour buy_product(), utilise if let Some(...) pour vérifier si le produit existe
+Pense à bien gérer le stock dans buy_product()
