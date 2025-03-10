@@ -1,0 +1,65 @@
+Exercice : Gestion d'une Bibliothèque 📚
+
+Tu vas implémenter un système de gestion de bibliothèque qui permet d'ajouter des livres, d'en emprunter et de les retourner. Ce système devra utiliser :
+
+✅ struct pour représenter un livre et la bibliothèque
+✅ enum pour gérer l'état d'un livre (Disponible ou Emprunté)
+✅ Option<T> pour retrouver un livre dans la bibliothèque
+✅ Result<T, E> pour gérer les erreurs (ex: emprunter un livre indisponible)
+✅ L'opérateur ? pour simplifier la gestion des erreurs
+✅ Un match pour traiter les différentes situations
+
+🎯 Consignes
+- Créer une struct Book qui contient :
+
+title: String (le titre du livre)
+author: String (l’auteur du livre)
+status: BookStatus (l'état du livre : Disponible ou Emprunté)
+
+
+- Créer un enum BookStatus avec deux états :
+
+Available (disponible)
+Borrowed (emprunté)
+
+
+- Créer une struct Library qui contient une liste de livres (Vec<Book>) et :
+
+> Une méthode add_book(&mut self, book: Book) pour ajouter un livre
+> Une méthode find_book(&mut self, title: &str) -> Option<&mut Book> pour chercher un livre
+> Une méthode borrow_book(&mut self, title: &str) -> Result<(), String> pour emprunter un livre
+> Une méthode return_book(&mut self, title: &str) -> Result<(), String> pour retourner un livre
+
+Dans main(), ajoute quelques livres et effectue ces opérations :
+
+Affiche l'état d'un livre avant/après l'emprunt
+Essaye d'emprunter un livre qui n'existe pas
+Essaye de retourner un livre qui n'a pas été emprunté
+
+--------------------------------------------------------------------------------------------
+ 
+Exemple d'utilisation : 
+
+let mut library = Library::new();
+library.add_book(Book::new("Rust Programming", "Steve"));
+
+// Emprunter le livre
+match library.borrow_book("Rust Programming") {
+    Ok(_) => println!("Livre emprunté avec succès !"),
+    Err(e) => println!("Erreur: {}", e),
+}
+
+// Vérifier l'état du livre après l'emprunt
+println!("{:?}", library.find_book("Rust Programming"));
+
+// Tenter d'emprunter un livre déjà emprunté
+match library.borrow_book("Rust Programming") {
+    Ok(_) => println!("Livre emprunté avec succès !"),
+    Err(e) => println!("Erreur: {}", e),
+}
+
+// Retourner le livre
+match library.return_book("Rust Programming") {
+    Ok(_) => println!("Livre retourné avec succès !"),
+    Err(e) => println!("Erreur: {}", e),
+}
